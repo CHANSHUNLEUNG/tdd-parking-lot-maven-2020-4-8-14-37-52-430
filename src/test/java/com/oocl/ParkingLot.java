@@ -2,6 +2,8 @@ package com.oocl;
 
 import com.oocl.entity.Car;
 import com.oocl.entity.ParkingBoy;
+import com.oocl.entity.Ticket;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -21,10 +23,19 @@ import static org.junit.Assert.*;
 //    Passing a parked car to a parking boy.
 //    Passing a?null?car to a parking boy.
 public class ParkingLot {
+    private ParkingBoy parkingBoy;
+    private static final String Car_NUMBER = "my-example-car-number";
+    private Car exampleCar = new Car(Car_NUMBER);
+    private Ticket exampleTicket = new Ticket(Car_NUMBER);
+
+    @Before
+    public void setUp() throws Exception {
+        parkingBoy = new ParkingBoy();
+    }
+
     @Test
     public void should_return_a_ticket_when_parking_boy_park_a_car_successfully() {
-        ParkingBoy parkingBoy = new ParkingBoy();
-        Car car = new Car("my-example-car-number");
-        assertEquals("my-example-car-number",parkingBoy.parkCar(car));;
+        Ticket exampleTicket = new Ticket("my-example-car-number");
+        assertEquals(exampleTicket.getCarNumber(),parkingBoy.parkCar(exampleCar));;
     }
 }
