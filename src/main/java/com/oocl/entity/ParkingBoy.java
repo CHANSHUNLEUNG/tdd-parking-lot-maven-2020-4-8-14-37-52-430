@@ -3,6 +3,7 @@ package com.oocl.entity;
 import java.util.ArrayList;
 
 public class ParkingBoy {
-    public String parkCar(Car car) {
+    public Ticket parkCar(Car car) {
+        return new Ticket(car);
     }
 }
