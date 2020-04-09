@@ -65,4 +65,14 @@ public class ParkingLotTest {
         parkingBoy.parkCar(parkingLot,secondCar);
         assertEquals(firstCar,parkingBoy.fetchCar(firstTicket));
     }
+
+    @Test
+    public void should_get_the_car_and_remove_ticket_when_fetch_car() {
+        parkingBoy.parkCar(parkingLot,firstCar);
+        assertEquals(1,parkingLot.getTicketList().size());
+        parkingBoy.parkCar(parkingLot,secondCar);
+        assertEquals(2,parkingLot.getTicketList().size());
+        assertEquals(firstCar,parkingBoy.fetchCar(firstTicket));
+        assertEquals(1,parkingLot.getTicketList().size());
+    }
 }
