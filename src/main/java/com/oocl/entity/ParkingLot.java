@@ -29,4 +29,8 @@ public class ParkingLot {
     public void setTicketList(ArrayList<Ticket> ticketList) {
         this.ticketList = ticketList;
     }
+
+    public void addTicket(Ticket ticket) {
+        this.ticketList.add(ticket);
+    }
 }

@@ -49,7 +49,7 @@ public class ParkingLotTest {
     }
     @Test
     public void should_return_a_ticket_with_correct_car_number_when_parking_boy_park_a_car_successfully() {
-        assertEquals(firstTicket.getCarNumber(),parkingBoy.parkCar(parkingLot, firstCar).getCarNumber());;
+        assertEquals(firstTicket.getCar(),parkingBoy.parkCar(parkingLot, firstCar).getCar());;
     }
 
     @Test
@@ -57,5 +57,12 @@ public class ParkingLotTest {
         parkingBoy.parkCar(parkingLot,firstCar);
         parkingBoy.parkCar(parkingLot,secondCar);
         assertEquals(parkingLot.getTicketList().size(),2);
+    }
+
+    @Test
+    public void should_fetch_the_right_car_when_there_are_two_cars_in_a_parking_lot() {
+        parkingBoy.parkCar(parkingLot,firstCar);
+        parkingBoy.parkCar(parkingLot,secondCar);
+        assertEquals(firstCar,parkingBoy.fetchCar(firstTicket));
     }
 }

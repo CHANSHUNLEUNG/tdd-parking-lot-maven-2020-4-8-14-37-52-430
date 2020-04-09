@@ -2,18 +2,26 @@ package com.oocl.entity;
 
 public class Ticket {
 
-    private String carNumber;
+    private Car car;
     private ParkingLot parkingLot;
     public Ticket(ParkingLot parkingLot, Car car) {
-        this.carNumber = car.getCarNumber();
+        this.car = car;
         this.parkingLot = parkingLot;
     }
 
-    public String getCarNumber() {
-        return carNumber;
+    public Car getCar() {
+        return car;
     }
 
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public ParkingLot getParkingLot() {
+        return parkingLot;
+    }
+
+    public void setParkingLot(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
     }
 }
