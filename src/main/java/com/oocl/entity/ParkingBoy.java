@@ -1,10 +1,12 @@
 package com.oocl.entity;
 
+import com.oocl.exception.UnrecognizedParkingTicket;
+
 public class ParkingBoy {
+    public static final String UNRECOGNIZED_PARKING_TICKET_ERROR = "Unrecognized parking ticket";
     private ParkingLot parkingLot;
 
-    public ParkingBoy(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+    public ParkingBoy() {
     }
 
     public ParkingLot getParkingLot() {
@@ -28,14 +30,14 @@ public class ParkingBoy {
         return ticket;
     }
 
-    public Car fetchCar(Ticket ticket) {
+    public Car fetchCar(Ticket ticket) throws UnrecognizedParkingTicket{
         boolean isTicketCorrect = ticket.getParkingLot().getCarList().contains(ticket.getCar());
-        if (isTicketCorrect) {
-            ticket.getParkingLot().getTicketList().remove(ticket);
-            ticket.getParkingLot().getCarList().remove(ticket.getCar());
-            return ticket.getCar();
+        if (!isTicketCorrect) {
+            return null;
         }
-        return null;
+        ticket.getParkingLot().getTicketList().remove(ticket);
+        ticket.getParkingLot().getCarList().remove(ticket.getCar());
+        return ticket.getCar();
 
     }
 

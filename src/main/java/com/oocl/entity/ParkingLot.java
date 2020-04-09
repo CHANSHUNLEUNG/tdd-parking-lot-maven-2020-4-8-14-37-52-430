@@ -57,4 +57,9 @@ public class ParkingLot {
     public void addCar(Car car) {
         this.carList.add(car);
     }
+
+    public void addParkingBoy(ParkingBoy parkingBoy) {
+        this.parkingBoys.add(parkingBoy);
+        parkingBoy.setParkingLot(this);
+    }
 }
