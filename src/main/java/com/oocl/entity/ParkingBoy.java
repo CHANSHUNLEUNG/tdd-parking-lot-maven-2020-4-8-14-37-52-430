@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ParkingBoy {
-    public static final String UNRECOGNIZED_PARKING_TICKET_ERROR = "Unrecognized parking ticket";
     private ArrayList<ParkingLot> parkingLotList = new ArrayList<ParkingLot>();
 
     public ParkingBoy(ParkingLot ...parkingLotList) {
@@ -24,7 +23,7 @@ public class ParkingBoy {
     public Car fetchCar(Ticket ticket) throws UnrecognizedParkingTicket{
         boolean isTicketCorrect = ticket.getParkingLot().getCarList().contains(ticket.getCar());
         if (!isTicketCorrect) {
-            throw new UnrecognizedParkingTicket(UNRECOGNIZED_PARKING_TICKET_ERROR);
+            throw new UnrecognizedParkingTicket(UnrecognizedParkingTicket.Wrong_TICKET_ERROR);
         }
         ticket.getParkingLot().getTicketList().remove(ticket);
         ticket.getParkingLot().getCarList().remove(ticket.getCar());
