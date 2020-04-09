@@ -83,4 +83,11 @@ public class ParkingLotTest {
         assertEquals(null,parkingBoy.fetchCar());
         assertEquals(null,parkingBoy.fetchCar(new Ticket(parkingLot, secondCar)));
     }
+
+    @Test
+    public void should_return_null_when_give_the_same_ticket_twice() {
+        Ticket firstTicket = parkingBoy.parkCar(parkingLot, firstCar);
+        parkingBoy.fetchCar(firstTicket);
+        assertEquals(null,parkingBoy.fetchCar(firstTicket));
+    }
 }
