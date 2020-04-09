@@ -30,8 +30,6 @@ public class ParkingLotTest {
     private static final String PARKING_LOT_NAME = "my-example-parking-name";
     private Car firstCar;
     private Car secondCar;
-    private Ticket firstTicket;
-    private Ticket secondTicket;
 
     @Before
     public void setUp() throws Exception {
@@ -39,17 +37,15 @@ public class ParkingLotTest {
         parkingLot = new ParkingLot(PARKING_LOT_NAME);
         firstCar = new Car(Car_NUMBER);
         secondCar = new Car(Car_NUMBER);
-        firstTicket = new Ticket(parkingLot, firstCar);
-        secondTicket = new Ticket(parkingLot, firstCar);
     }
 
     @Test
     public void should_return_a_ticket_when_parking_boy_park_a_car_successfully() {
-        assertEquals(firstTicket.getClass(),parkingBoy.parkCar(parkingLot, firstCar).getClass());;
+        assertEquals(Ticket.class,parkingBoy.parkCar(parkingLot, firstCar).getClass());;
     }
     @Test
     public void should_return_a_ticket_with_correct_car_number_when_parking_boy_park_a_car_successfully() {
-        assertEquals(firstTicket.getCar(),parkingBoy.parkCar(parkingLot, firstCar).getCar());;
+        assertEquals(Car_NUMBER,parkingBoy.parkCar(parkingLot, firstCar).getCar().getCarNumber());;
     }
 
     @Test
@@ -61,17 +57,19 @@ public class ParkingLotTest {
 
     @Test
     public void should_fetch_the_right_car_when_there_are_two_cars_in_a_parking_lot() {
-        parkingBoy.parkCar(parkingLot,firstCar);
-        parkingBoy.parkCar(parkingLot,secondCar);
+        Ticket firstTicket = parkingBoy.parkCar(parkingLot,firstCar);
+        Ticket secondTicket = parkingBoy.parkCar(parkingLot,secondCar);
         assertEquals(firstCar,parkingBoy.fetchCar(firstTicket));
     }
 
     @Test
     public void should_get_the_car_and_remove_ticket_when_fetch_car() {
-        parkingBoy.parkCar(parkingLot,firstCar);
+        Ticket firstTicket = parkingBoy.parkCar(parkingLot,firstCar);
         assertEquals(1,parkingLot.getTicketList().size());
-        parkingBoy.parkCar(parkingLot,secondCar);
+
+        Ticket secondTicket = parkingBoy.parkCar(parkingLot,secondCar);
         assertEquals(2,parkingLot.getTicketList().size());
+
         assertEquals(firstCar,parkingBoy.fetchCar(firstTicket));
         assertEquals(1,parkingLot.getTicketList().size());
     }

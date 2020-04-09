@@ -52,4 +52,8 @@ public class ParkingLot {
     public void setParkingLotName(String parkingLotName) {
         this.parkingLotName = parkingLotName;
     }
+
+    public void addCar(Car car) {
+        this.carList.add(car);
+    }
 }
