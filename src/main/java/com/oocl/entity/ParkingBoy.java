@@ -24,10 +24,14 @@ public class ParkingBoy {
     }
 
     public Car fetchCar(Ticket ticket) {
-        ticket.getParkingLot().getTicketList().remove(ticket);
-        ticket.getParkingLot().getCarList().remove(ticket.getCar());
+        boolean isTicketCorrect = ticket.getParkingLot().getCarList().contains(ticket.getCar());
+        if(isTicketCorrect) {
+            ticket.getParkingLot().getTicketList().remove(ticket);
+            ticket.getParkingLot().getCarList().remove(ticket.getCar());
+            return ticket.getCar();
+        }
+        return null;
 
-        return ticket.getCar();
     }
     public Car fetchCar(){
         return null;
