@@ -1,9 +1,6 @@
 package com.oocl;
 
-import com.oocl.entity.Car;
-import com.oocl.entity.ParkingBoy;
-import com.oocl.entity.ParkingLot;
-import com.oocl.entity.Ticket;
+import com.oocl.entity.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -30,6 +27,7 @@ public class ParkingLotTest {
     private static final String PARKING_LOT_NAME = "my-example-parking-name";
     private Car firstCar;
     private Car secondCar;
+    private Customer customer;
 
     @Before
     public void setUp() throws Exception {
@@ -37,6 +35,7 @@ public class ParkingLotTest {
         parkingLot = new ParkingLot(PARKING_LOT_NAME);
         firstCar = new Car(Car_NUMBER);
         secondCar = new Car(Car_NUMBER);
+        customer = new Customer();
     }
 
     @Test
@@ -66,11 +65,23 @@ public class ParkingLotTest {
     public void should_get_the_car_and_remove_ticket_when_fetch_car() {
         Ticket firstTicket = parkingBoy.parkCar(parkingLot,firstCar);
         assertEquals(1,parkingLot.getTicketList().size());
+        assertEquals(1,parkingLot.getCarList().size());
 
         Ticket secondTicket = parkingBoy.parkCar(parkingLot,secondCar);
         assertEquals(2,parkingLot.getTicketList().size());
+        assertEquals(2,parkingLot.getCarList().size());
+
 
         assertEquals(firstCar,parkingBoy.fetchCar(firstTicket));
+
         assertEquals(1,parkingLot.getTicketList().size());
+        assertEquals(1,parkingLot.getCarList().size());
+
+    }
+
+    @Test
+    public void should_return_null_when_customer_gives_the_wrong_ticket() {
+        customer.parkCar(parkingLot, firstCar);
+        assertEquals(null,customer.fetchCar(new Ticket(parkingLot, secondCar)));
     }
 }
