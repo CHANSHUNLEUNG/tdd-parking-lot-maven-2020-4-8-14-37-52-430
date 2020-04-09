@@ -41,4 +41,6 @@ public class ParkingLot {
     public void should_return_a_ticket_with_correct_car_number_when_parking_boy_park_a_car_successfully() {
         assertEquals(exampleTicket.getCarNumber(),parkingBoy.parkCar(exampleCar).getCarNumber());;
     }
+
+
 }
