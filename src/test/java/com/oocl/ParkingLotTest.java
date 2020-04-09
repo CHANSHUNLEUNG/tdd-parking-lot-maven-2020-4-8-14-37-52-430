@@ -1,6 +1,7 @@
 package com.oocl;
 
 import com.oocl.entity.*;
+import com.oocl.exception.FullParkingTicket;
 import com.oocl.exception.UnrecognizedParkingTicket;
 import org.junit.Before;
 import org.junit.Rule;
@@ -70,33 +71,33 @@ public class ParkingLotTest {
 
 
     @Test
-    public void should_return_a_ticket_when_parking_boy_park_a_car_successfully() {
+    public void should_return_a_ticket_when_parking_boy_park_a_car_successfully() throws FullParkingTicket {
         assertEquals(Ticket.class, parkingBoy.parkCar(firstCar).getClass());
         ;
     }
 
     @Test
-    public void should_return_a_ticket_with_correct_car_number_when_parking_boy_park_a_car_successfully() {
+    public void should_return_a_ticket_with_correct_car_number_when_parking_boy_park_a_car_successfully() throws FullParkingTicket {
         assertEquals(Car_NUMBER, parkingBoy.parkCar(firstCar).getCar().getCarNumber());
         ;
     }
 
     @Test
-    public void should_parking_lot_access_multiply_car() {
+    public void should_parking_lot_access_multiply_car() throws FullParkingTicket {
         parkingBoy.parkCar(firstCar);
         parkingBoy.parkCar(secondCar);
         assertEquals(parkingLot.getTicketList().size(), 2);
     }
 
     @Test
-    public void should_fetch_the_right_car_when_there_are_two_cars_in_a_parking_lot() throws UnrecognizedParkingTicket {
+    public void should_fetch_the_right_car_when_there_are_two_cars_in_a_parking_lot() throws UnrecognizedParkingTicket, FullParkingTicket {
         Ticket firstTicket = parkingBoy.parkCar(firstCar);
         Ticket secondTicket = parkingBoy.parkCar(secondCar);
         assertEquals(firstCar, parkingBoy.fetchCar(firstTicket));
     }
 
     @Test
-    public void should_get_the_car_and_remove_ticket_when_fetch_car() throws UnrecognizedParkingTicket {
+    public void should_get_the_car_and_remove_ticket_when_fetch_car() throws UnrecognizedParkingTicket, FullParkingTicket {
         Ticket firstTicket = parkingBoy.parkCar(firstCar);
         assertEquals(1, parkingLot.getTicketList().size());
         assertEquals(1, parkingLot.getCarList().size());
@@ -128,23 +129,24 @@ public class ParkingLotTest {
 //    }
 
     @Test
-    public void should_return_no_ticket_when_parking_lot_full() {
-        for (int index = 0; index < ParkingLot.MAX_POSITION; index++) {
+    public void should_throw_exception_when_parking_lot_is_full() throws FullParkingTicket {
+        expectedException.expect(FullParkingTicket.class);
+        expectedException.expectMessage(FullParkingTicket.FULL_POSITION_ERROR);
+        for (int index = 0; index <= ParkingLot.MAX_POSITION; index++) {
             parkingBoy.parkCar(new Car("testcar"));
         }
-        assertEquals(null, parkingBoy.parkCar(firstCar));
     }
 
     @Test
-    public void should_throw_unrecognizedparkingticket_exception_with_correct_message_when_customer_give_wrong_ticket()
-            throws UnrecognizedParkingTicket {
+    public void should_throw_exception_when_customer_give_wrong_ticket()
+            throws UnrecognizedParkingTicket, FullParkingTicket {
         expectedException.expect(UnrecognizedParkingTicket.class);
         expectedException.expectMessage(UnrecognizedParkingTicket.Wrong_TICKET_ERROR);
         Ticket firstTicket = parkingBoy.parkCar(firstCar);
         assertEquals(null, parkingBoy.fetchCar(new Ticket(parkingLot, secondCar)));
     }
     @Test
-    public void should_throw_unrecognizedparkingticket_exception_with_correct_message_when_customer_give_no_ticket()
+    public void should_throw_exception_when_customer_give_no_ticket()
             throws UnrecognizedParkingTicket {
         expectedException.expect(UnrecognizedParkingTicket.class);
         expectedException.expectMessage(UnrecognizedParkingTicket.NO_TICKET_ERROR);

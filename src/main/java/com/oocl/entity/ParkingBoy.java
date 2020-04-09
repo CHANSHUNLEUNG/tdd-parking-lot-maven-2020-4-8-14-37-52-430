@@ -1,5 +1,6 @@
 package com.oocl.entity;
 
+import com.oocl.exception.FullParkingTicket;
 import com.oocl.exception.UnrecognizedParkingTicket;
 
 import java.util.ArrayList;
@@ -12,11 +13,13 @@ public class ParkingBoy {
         this.parkingLotList.addAll(Arrays.asList(parkingLotList));
     }
 
-    public Ticket parkCar(Car car) {
+    public Ticket parkCar(Car car) throws FullParkingTicket {
         ParkingLot selectedParkingLot = this.parkingLotList.stream().filter(parkingLot -> !parkingLot.isFull())
                 .findFirst().orElse(null);
-        return (selectedParkingLot == null) ? null : selectedParkingLot.park(car);
-
+        if(selectedParkingLot == null){
+            throw new FullParkingTicket(FullParkingTicket.FULL_POSITION_ERROR);
+        }
+        return selectedParkingLot.park(car);
 
     }
 
@@ -30,7 +33,7 @@ public class ParkingBoy {
         return ticket.getCar();
     }
 
-    public Car fetchCar() {
-        return null;
+    public Car fetchCar() throws UnrecognizedParkingTicket {
+        throw new UnrecognizedParkingTicket(UnrecognizedParkingTicket.NO_TICKET_ERROR);
     }
 }
