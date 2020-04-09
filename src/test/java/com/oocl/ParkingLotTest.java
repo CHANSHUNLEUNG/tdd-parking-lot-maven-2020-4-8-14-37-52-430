@@ -8,52 +8,16 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
 import org.junit.rules.ExpectedException;
-
-//    AC1: The parking boy can park a car into the parking lot and returns a parking ticket.
-//    The customer can give the parking ticket back to the parking boy to fetch the car.
-
-//    AC2: The parking boy can park multiple cars into the parking lot. And can fetch right car using correspond ticket.
-
-//    AC3: If the customer gives a wrong ticket (the parking boy did not provide the ticket) or does not give a ticket.
-//    Then no car should be fetched.
-
-//    AC4: If the customer gives a ticket that has already been used. Then no car should be fetched.
-
-//    AC5: The parking lot has a capacity (the default capacity of a parking lot is 10).
-//    If there is no position, then the user cannot park the car into it. Thus (s)he will not get any ticket.
-//    There are some cases which are not a requirement but may happen technically
-//    Passing a parked car to a parking boy.
-//    Passing a?null?car to a parking boy.
-
-
-// ------------------- done --------------------
-//    As a customer, I would like to get some response message from the parking boy when I cannot fetch the car.
-//    So that I can know what happens.
-
-//    AC1: When the customer gives a wrong ticket (the parking boy does not provide the ticket / the ticket has been used).
-//    Then no car should be fetched. If I query the error message, I can get an "Unrecognized parking ticket.".
-
-//    AC2: When the customer does not provide a ticket when fetching a car.
-//    The error message should be "Please provide your parking ticket."
-
-//    AC3: When the parking boy attempt to park a car into a parking lot without a position.
-//    The error message should be "Not enough position."
-
-//    As a parking lots service manager, I would like to have a parking boy parking cars to multiple parking lots.
-//    So that I can provide more parking positions.
-
-//    AC1. The parking boy is not that clever, and he will always park cars sequentially
-//    (suppose that there are two parking lots managed by the parking boy.
-//    The parking boy will park cars to the second parking lot when the first parking lot is full).
-
-//    AC2: All the requirement in?Story 1?and?Story 2?MUST?be satisfied.
 
 public class ParkingLotTest {
     private static final String Car_NUMBER = "my-example-car-number";
-    private static final String PARKING_LOT_NAME = "my-example-parking-name";
+    private static final String FIRST_PARKING_LOT_NAME = "FIRST_PARKING_LOT_NAME";
+    private static final String SECOND_PARKING_LOT_NAME = "SECOND_PARKING_LOT_NAME";
 
-    private ParkingLot parkingLot;
+    private ParkingLot firstParkingLot;
+    private ParkingLot secondParkingLot;
     private ParkingBoy parkingBoy;
     private Car firstCar;
     private Car secondCar;
@@ -63,8 +27,9 @@ public class ParkingLotTest {
 
     @Before
     public void setUp() throws Exception {
-        parkingLot = new ParkingLot(PARKING_LOT_NAME);
-        parkingBoy = new ParkingBoy(parkingLot);
+        firstParkingLot = new ParkingLot(FIRST_PARKING_LOT_NAME);
+        secondParkingLot = new ParkingLot(SECOND_PARKING_LOT_NAME);
+        parkingBoy = new ParkingBoy(firstParkingLot, secondParkingLot);
         firstCar = new Car(Car_NUMBER);
         secondCar = new Car(Car_NUMBER);
     }
@@ -86,7 +51,7 @@ public class ParkingLotTest {
     public void should_parking_lot_access_multiply_car() throws FullParkingTicket {
         parkingBoy.parkCar(firstCar);
         parkingBoy.parkCar(secondCar);
-        assertEquals(parkingLot.getTicketList().size(), 2);
+        assertEquals(firstParkingLot.getTicketList().size(), 2);
     }
 
     @Test
@@ -99,34 +64,20 @@ public class ParkingLotTest {
     @Test
     public void should_get_the_car_and_remove_ticket_when_fetch_car() throws UnrecognizedParkingTicket, FullParkingTicket {
         Ticket firstTicket = parkingBoy.parkCar(firstCar);
-        assertEquals(1, parkingLot.getTicketList().size());
-        assertEquals(1, parkingLot.getCarList().size());
+        assertEquals(1, firstParkingLot.getTicketList().size());
+        assertEquals(1, firstParkingLot.getCarList().size());
 
         Ticket secondTicket = parkingBoy.parkCar(secondCar);
-        assertEquals(2, parkingLot.getTicketList().size());
-        assertEquals(2, parkingLot.getCarList().size());
+        assertEquals(2, firstParkingLot.getTicketList().size());
+        assertEquals(2, firstParkingLot.getCarList().size());
 
 
         assertEquals(firstCar, parkingBoy.fetchCar(firstTicket));
 
-        assertEquals(1, parkingLot.getTicketList().size());
-        assertEquals(1, parkingLot.getCarList().size());
+        assertEquals(1, firstParkingLot.getTicketList().size());
+        assertEquals(1, firstParkingLot.getCarList().size());
 
     }
-
-//    @Test
-//    public void should_return_null_when_customer_gives_the_wrong_ticket() throws UnrecognizedParkingTicket {
-//        parkingBoy.parkCar(firstCar);
-//        assertEquals(null, parkingBoy.fetchCar());
-//        assertEquals(null, parkingBoy.fetchCar(new Ticket(parkingLot, secondCar)));
-//    }
-//
-//    @Test
-//    public void should_return_null_when_give_the_same_ticket_twice() throws UnrecognizedParkingTicket {
-//        Ticket firstTicket = parkingBoy.parkCar(firstCar);
-//        parkingBoy.fetchCar(firstTicket);
-//        assertEquals(null, parkingBoy.fetchCar(firstTicket));
-//    }
 
     @Test
     public void should_throw_exception_when_parking_lot_is_full() throws FullParkingTicket {
@@ -143,13 +94,23 @@ public class ParkingLotTest {
         expectedException.expect(UnrecognizedParkingTicket.class);
         expectedException.expectMessage(UnrecognizedParkingTicket.Wrong_TICKET_ERROR);
         Ticket firstTicket = parkingBoy.parkCar(firstCar);
-        assertEquals(null, parkingBoy.fetchCar(new Ticket(parkingLot, secondCar)));
+        assertEquals(null, parkingBoy.fetchCar(new Ticket(firstParkingLot, secondCar)));
     }
+
     @Test
     public void should_throw_exception_when_customer_give_no_ticket()
             throws UnrecognizedParkingTicket {
         expectedException.expect(UnrecognizedParkingTicket.class);
         expectedException.expectMessage(UnrecognizedParkingTicket.NO_TICKET_ERROR);
         parkingBoy.fetchCar();
+    }
+
+    @Test
+    public void should_park_two_second_parking_lot_only_if_first_parking_lot_is_full() throws FullParkingTicket {
+        for (int index = 0; index <= ParkingLot.MAX_POSITION; index++) {
+            parkingBoy.parkCar(new Car("first car"));
+        }
+        parkingBoy.parkCar(new Car("second car"));
+        assertEquals("second car", parkingBoy.getParkingLotList().get(1).getCarList().get(0).getCarNumber());
     }
 }

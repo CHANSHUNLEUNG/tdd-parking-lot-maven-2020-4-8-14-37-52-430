@@ -9,6 +9,10 @@ import java.util.Arrays;
 public class ParkingBoy {
     private ArrayList<ParkingLot> parkingLotList = new ArrayList<ParkingLot>();
 
+    public ArrayList<ParkingLot> getParkingLotList() {
+        return parkingLotList;
+    }
+
     public ParkingBoy(ParkingLot ...parkingLotList) {
         this.parkingLotList.addAll(Arrays.asList(parkingLotList));
     }
