@@ -18,7 +18,6 @@ public class ParkingLot {
     }
 
 
-
     public ArrayList<ParkingBoy> getParkingBoys() {
         return parkingBoys;
     }
@@ -26,6 +25,7 @@ public class ParkingLot {
     public void setParkingBoys(ArrayList<ParkingBoy> parkingBoys) {
         this.parkingBoys = parkingBoys;
     }
+
     public ArrayList<Ticket> getTicketList() {
         return ticketList;
     }

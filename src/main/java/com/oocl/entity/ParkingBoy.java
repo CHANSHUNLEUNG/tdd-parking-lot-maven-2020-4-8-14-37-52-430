@@ -16,7 +16,12 @@ public class ParkingBoy {
     }
 
     public Ticket parkCar(ParkingLot parkingLot, Car car) {
-        Ticket ticket = new Ticket(parkingLot,car);
+        boolean isParkingLotFull = parkingLot.getCarList().size() >= ParkingLot.MAX_POSITION;
+        if (isParkingLotFull) {
+            return null;
+        }
+
+        Ticket ticket = new Ticket(parkingLot, car);
         parkingLot.addTicket(ticket);
         parkingLot.addCar(car);
 
@@ -25,7 +30,7 @@ public class ParkingBoy {
 
     public Car fetchCar(Ticket ticket) {
         boolean isTicketCorrect = ticket.getParkingLot().getCarList().contains(ticket.getCar());
-        if(isTicketCorrect) {
+        if (isTicketCorrect) {
             ticket.getParkingLot().getTicketList().remove(ticket);
             ticket.getParkingLot().getCarList().remove(ticket.getCar());
             return ticket.getCar();
@@ -33,7 +38,8 @@ public class ParkingBoy {
         return null;
 
     }
-    public Car fetchCar(){
+
+    public Car fetchCar() {
         return null;
     }
 }

@@ -100,6 +100,6 @@ public class ParkingLotTest {
         for (int index = 0; index < ParkingLot.MAX_POSITION; index++) {
             parkingBoy.parkCar(parkingLot, new Car("testcar"));
         }
-        assertEquals(null,parkingBoy.parkCar(parkingLot,firstCar));
+        assertEquals(null, parkingBoy.parkCar(parkingLot, firstCar));
     }
 }
