@@ -58,8 +58,14 @@ public class ParkingLot {
         this.carList.add(car);
     }
 
-    public void addParkingBoy(ParkingBoy parkingBoy) {
-        this.parkingBoys.add(parkingBoy);
-        parkingBoy.setParkingLot(this);
+    public boolean isFull(){
+        return this.carList.size() >= MAX_POSITION;
+    }
+
+    public Ticket park(Car car) {
+        Ticket ticket = new Ticket(this, car);
+        this.addTicket(ticket);
+        this.addCar(car);
+        return ticket;
     }
 }
