@@ -1,6 +1,19 @@
 package com.oocl.entity;
 
 public class ParkingBoy {
+    private ParkingLot parkingLot;
+
+    public ParkingBoy(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
+    }
+
+    public ParkingLot getParkingLot() {
+        return parkingLot;
+    }
+
+    public void setParkingLot(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
+    }
 
     public Ticket parkCar(ParkingLot parkingLot, Car car) {
         Ticket ticket = new Ticket(parkingLot,car);
@@ -11,15 +24,12 @@ public class ParkingBoy {
     }
 
     public Car fetchCar(Ticket ticket) {
-
-        System.out.println(ticket.getParkingLot().getTicketList().size());
         ticket.getParkingLot().getTicketList().remove(ticket);
-        System.out.println(ticket.getParkingLot().getTicketList().size());
-
-        System.out.println(ticket.getParkingLot().getCarList().size());
         ticket.getParkingLot().getCarList().remove(ticket.getCar());
-        System.out.println(ticket.getParkingLot().getCarList().size());
 
         return ticket.getCar();
+    }
+    public Car fetchCar(){
+        return null;
     }
 }

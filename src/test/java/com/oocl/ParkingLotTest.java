@@ -27,15 +27,13 @@ public class ParkingLotTest {
     private static final String PARKING_LOT_NAME = "my-example-parking-name";
     private Car firstCar;
     private Car secondCar;
-    private Customer customer;
 
     @Before
     public void setUp() throws Exception {
-        parkingBoy = new ParkingBoy();
         parkingLot = new ParkingLot(PARKING_LOT_NAME);
+        parkingBoy = new ParkingBoy(parkingLot);
         firstCar = new Car(Car_NUMBER);
         secondCar = new Car(Car_NUMBER);
-        customer = new Customer();
     }
 
     @Test
@@ -81,7 +79,8 @@ public class ParkingLotTest {
 
     @Test
     public void should_return_null_when_customer_gives_the_wrong_ticket() {
-        customer.parkCar(parkingLot, firstCar);
-        assertEquals(null,customer.fetchCar(new Ticket(parkingLot, secondCar)));
+        parkingBoy.parkCar(parkingLot, firstCar);
+        assertEquals(null,parkingBoy.fetchCar());
+        assertEquals(null,parkingBoy.fetchCar(new Ticket(parkingLot, secondCar)));
     }
 }
