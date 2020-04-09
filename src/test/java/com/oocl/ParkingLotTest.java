@@ -20,6 +20,7 @@ public class ParkingLotTest {
     private ParkingLot secondParkingLot;
     private ParkingBoy parkingBoy;
     private SmartParkingBoy smartParkingBoy;
+    private SuperSmartParkingBoy superSmartParkingBoy;
     private Car firstCar;
     private Car secondCar;
 
@@ -32,6 +33,7 @@ public class ParkingLotTest {
         secondParkingLot = new ParkingLot(SECOND_PARKING_LOT_NAME);
         parkingBoy = new ParkingBoy(firstParkingLot, secondParkingLot);
         smartParkingBoy = new SmartParkingBoy(firstParkingLot, secondParkingLot);
+        superSmartParkingBoy = new SuperSmartParkingBoy(firstParkingLot, secondParkingLot);
         firstCar = new Car(Car_NUMBER);
         secondCar = new Car(Car_NUMBER);
     }
@@ -128,5 +130,19 @@ public class ParkingLotTest {
         assertEquals(3,smartParkingBoy.getParkingLotList().get(0).getCarList().size());
         smartParkingBoy.parkCar(new Car("test car"));
         assertEquals(3,smartParkingBoy.getParkingLotList().get(1).getCarList().size());
+    }
+    @Test
+    public void should_super_smart_parking_boy_park_correct_parking_lot() throws FullParkingTicket {
+        for (int index = 0; index < 2; index++) {
+            parkingBoy.parkCar(new Car("test car"));
+        }
+        superSmartParkingBoy.parkCar(new Car("test car"));
+        assertEquals(1,superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
+        superSmartParkingBoy.parkCar(new Car("test car"));
+        assertEquals(2,superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
+        superSmartParkingBoy.parkCar(new Car("test car"));
+        assertEquals(3,superSmartParkingBoy.getParkingLotList().get(0).getCarList().size());
+        superSmartParkingBoy.parkCar(new Car("test car"));
+        assertEquals(3,superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
     }
 }
