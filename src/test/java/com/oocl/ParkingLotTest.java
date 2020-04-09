@@ -28,7 +28,7 @@ public class ParkingLotTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         firstParkingLot = new ParkingLot(FIRST_PARKING_LOT_NAME);
         secondParkingLot = new ParkingLot(SECOND_PARKING_LOT_NAME);
         parkingBoy = new ParkingBoy(firstParkingLot, secondParkingLot);
@@ -61,7 +61,6 @@ public class ParkingLotTest {
     @Test
     public void should_fetch_the_right_car_when_there_are_two_cars_in_a_parking_lot() throws UnrecognizedParkingTicket, FullParkingTicket {
         Ticket firstTicket = parkingBoy.parkCar(firstCar);
-        Ticket secondTicket = parkingBoy.parkCar(secondCar);
         assertEquals(firstCar, parkingBoy.fetchCar(firstTicket));
     }
 
@@ -97,7 +96,6 @@ public class ParkingLotTest {
             throws UnrecognizedParkingTicket, FullParkingTicket {
         expectedException.expect(UnrecognizedParkingTicket.class);
         expectedException.expectMessage(UnrecognizedParkingTicket.Wrong_TICKET_ERROR);
-        Ticket firstTicket = parkingBoy.parkCar(firstCar);
         assertEquals(null, parkingBoy.fetchCar(new Ticket(firstParkingLot, secondCar)));
     }
 
@@ -117,32 +115,34 @@ public class ParkingLotTest {
         parkingBoy.parkCar(new Car("second car"));
         assertEquals("second car", parkingBoy.getParkingLotList().get(1).getCarList().get(0).getCarNumber());
     }
+
     @Test
     public void should_smart_parking_boy_park_correct_parking_lot() throws FullParkingTicket {
         for (int index = 0; index < 2; index++) {
             parkingBoy.parkCar(new Car("test car"));
         }
         smartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(1,smartParkingBoy.getParkingLotList().get(1).getCarList().size());
+        assertEquals(1, smartParkingBoy.getParkingLotList().get(1).getCarList().size());
         smartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(2,smartParkingBoy.getParkingLotList().get(1).getCarList().size());
+        assertEquals(2, smartParkingBoy.getParkingLotList().get(1).getCarList().size());
         smartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(3,smartParkingBoy.getParkingLotList().get(0).getCarList().size());
+        assertEquals(3, smartParkingBoy.getParkingLotList().get(0).getCarList().size());
         smartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(3,smartParkingBoy.getParkingLotList().get(1).getCarList().size());
+        assertEquals(3, smartParkingBoy.getParkingLotList().get(1).getCarList().size());
     }
+
     @Test
     public void should_super_smart_parking_boy_park_correct_parking_lot() throws FullParkingTicket {
         for (int index = 0; index < 2; index++) {
             parkingBoy.parkCar(new Car("test car"));
         }
         superSmartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(1,superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
+        assertEquals(1, superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
         superSmartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(2,superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
+        assertEquals(2, superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
         superSmartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(3,superSmartParkingBoy.getParkingLotList().get(0).getCarList().size());
+        assertEquals(3, superSmartParkingBoy.getParkingLotList().get(0).getCarList().size());
         superSmartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(3,superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
+        assertEquals(3, superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
     }
 }
