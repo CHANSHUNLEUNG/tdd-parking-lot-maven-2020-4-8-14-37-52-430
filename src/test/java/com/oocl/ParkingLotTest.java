@@ -141,8 +141,13 @@ public class ParkingLotTest {
         expectedException.expect(UnrecognizedParkingTicket.class);
         expectedException.expectMessage(UnrecognizedParkingTicket.Wrong_TICKET_ERROR);
         Ticket firstTicket = parkingBoy.parkCar(firstCar);
-        parkingBoy.fetchCar(firstTicket);
-        assertEquals(null, parkingBoy.fetchCar(firstTicket));
-
+        assertEquals(null, parkingBoy.fetchCar(new Ticket(parkingLot, secondCar)));
+    }
+    @Test
+    public void should_throw_unrecognizedparkingticket_exception_with_correct_message_when_customer_give_no_ticket()
+            throws UnrecognizedParkingTicket {
+        expectedException.expect(UnrecognizedParkingTicket.class);
+        expectedException.expectMessage(UnrecognizedParkingTicket.NO_TICKET_ERROR);
+        parkingBoy.fetchCar();
     }
 }
