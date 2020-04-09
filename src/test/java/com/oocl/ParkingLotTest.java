@@ -83,7 +83,7 @@ public class ParkingLotTest {
     public void should_throw_exception_when_parking_lot_is_full() throws FullParkingTicket {
         expectedException.expect(FullParkingTicket.class);
         expectedException.expectMessage(FullParkingTicket.FULL_POSITION_ERROR);
-        for (int index = 0; index <= ParkingLot.MAX_POSITION; index++) {
+        for (int index = 0; index < ParkingLot.MAX_POSITION * parkingBoy.getParkingLotList().size() + 1; index++) {
             parkingBoy.parkCar(new Car("testcar"));
         }
     }
@@ -107,7 +107,7 @@ public class ParkingLotTest {
 
     @Test
     public void should_park_two_second_parking_lot_only_if_first_parking_lot_is_full() throws FullParkingTicket {
-        for (int index = 0; index <= ParkingLot.MAX_POSITION; index++) {
+        for (int index = 0; index < ParkingLot.MAX_POSITION; index++) {
             parkingBoy.parkCar(new Car("first car"));
         }
         parkingBoy.parkCar(new Car("second car"));
