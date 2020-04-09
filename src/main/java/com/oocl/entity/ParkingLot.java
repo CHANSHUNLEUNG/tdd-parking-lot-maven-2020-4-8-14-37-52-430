@@ -3,14 +3,17 @@ package com.oocl.entity;
 import java.util.ArrayList;
 
 public class ParkingLot {
-    private String parkingLotId;
+    private String parkingLotName;
+    private ArrayList<Ticket> ticketList;
+    private ArrayList<ParkingBoy> parkingBoys;
 
-    public ParkingLot(String parkingLotId) {
-        this.parkingLotId = parkingLotId;
+
+    public ParkingLot(String parkingLotName) {
+        this.parkingLotName = parkingLotName;
+        ticketList = new ArrayList<Ticket>();
     }
 
-    private ArrayList<ParkingBoy> parkingBoys;
-    private ArrayList<Ticket> ticketList;
+
 
     public ArrayList<ParkingBoy> getParkingBoys() {
         return parkingBoys;
@@ -18,5 +21,12 @@ public class ParkingLot {
 
     public void setParkingBoys(ArrayList<ParkingBoy> parkingBoys) {
         this.parkingBoys = parkingBoys;
+    }
+    public ArrayList<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(ArrayList<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 }

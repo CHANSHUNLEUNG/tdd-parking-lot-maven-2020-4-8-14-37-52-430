@@ -3,8 +3,10 @@ package com.oocl.entity;
 public class Ticket {
 
     private String carNumber;
-    public Ticket(Car car) {
+    private ParkingLot parkingLot;
+    public Ticket(ParkingLot parkingLot, Car car) {
         this.carNumber = car.getCarNumber();
+        this.parkingLot = parkingLot;
     }
 
     public String getCarNumber() {

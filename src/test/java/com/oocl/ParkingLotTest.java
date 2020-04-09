@@ -2,6 +2,7 @@ package com.oocl;
 
 import com.oocl.entity.Car;
 import com.oocl.entity.ParkingBoy;
+import com.oocl.entity.ParkingLot;
 import com.oocl.entity.Ticket;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,25 +23,39 @@ import static org.junit.Assert.*;
 //    There are some cases which are not a requirement but may happen technically
 //    Passing a parked car to a parking boy.
 //    Passing a?null?car to a parking boy.
-public class ParkingLot {
+public class ParkingLotTest {
+    private ParkingLot parkingLot;
     private ParkingBoy parkingBoy;
     private static final String Car_NUMBER = "my-example-car-number";
-    private Car exampleCar = new Car(Car_NUMBER);
-    private Ticket exampleTicket = new Ticket(exampleCar);
+    private static final String PARKING_LOT_NAME = "my-example-parking-name";
+    private Car firstCar;
+    private Car secondCar;
+    private Ticket firstTicket;
+    private Ticket secondTicket;
 
     @Before
     public void setUp() throws Exception {
         parkingBoy = new ParkingBoy();
+        parkingLot = new ParkingLot(PARKING_LOT_NAME);
+        firstCar = new Car(Car_NUMBER);
+        secondCar = new Car(Car_NUMBER);
+        firstTicket = new Ticket(parkingLot, firstCar);
+        secondTicket = new Ticket(parkingLot, firstCar);
     }
 
     @Test
     public void should_return_a_ticket_when_parking_boy_park_a_car_successfully() {
-        assertEquals(exampleTicket.getClass(),parkingBoy.parkCar(exampleCar).getClass());;
+        assertEquals(firstTicket.getClass(),parkingBoy.parkCar(parkingLot, firstCar).getClass());;
     }
     @Test
     public void should_return_a_ticket_with_correct_car_number_when_parking_boy_park_a_car_successfully() {
-        assertEquals(exampleTicket.getCarNumber(),parkingBoy.parkCar(exampleCar).getCarNumber());;
+        assertEquals(firstTicket.getCarNumber(),parkingBoy.parkCar(parkingLot, firstCar).getCarNumber());;
     }
 
-
+    @Test
+    public void should_parking_lot_access_multiply_car() {
+        parkingBoy.parkCar(parkingLot,firstCar);
+        parkingBoy.parkCar(parkingLot,secondCar);
+        assertEquals(parkingLot.getTicketList().size(),2);
+    }
 }
