@@ -13,21 +13,21 @@ public class ParkingBoy {
         return parkingLotList;
     }
 
-    public ParkingBoy(ParkingLot ...parkingLotList) {
+    public ParkingBoy(ParkingLot... parkingLotList) {
         this.parkingLotList.addAll(Arrays.asList(parkingLotList));
     }
 
     public Ticket parkCar(Car car) throws FullParkingTicket {
         ParkingLot selectedParkingLot = this.parkingLotList.stream().filter(parkingLot -> !parkingLot.isFull())
                 .findFirst().orElse(null);
-        if(selectedParkingLot == null){
+        if (selectedParkingLot == null) {
             throw new FullParkingTicket(FullParkingTicket.FULL_POSITION_ERROR);
         }
         return selectedParkingLot.park(car);
 
     }
 
-    public Car fetchCar(Ticket ticket) throws UnrecognizedParkingTicket{
+    public Car fetchCar(Ticket ticket) throws UnrecognizedParkingTicket {
         boolean isTicketCorrect = ticket.getParkingLot().getCarList().contains(ticket.getCar());
         if (!isTicketCorrect) {
             throw new UnrecognizedParkingTicket(UnrecognizedParkingTicket.Wrong_TICKET_ERROR);

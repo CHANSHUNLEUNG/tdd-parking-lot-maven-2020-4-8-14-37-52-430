@@ -14,15 +14,8 @@ public class Ticket {
         return car;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
     public ParkingLot getParkingLot() {
         return parkingLot;
     }
 
-    public void setParkingLot(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
-    }
 }

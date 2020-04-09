@@ -11,7 +11,4 @@ public class Car {
         return carNumber;
     }
 
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
-    }
 }

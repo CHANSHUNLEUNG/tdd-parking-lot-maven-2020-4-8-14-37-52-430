@@ -18,21 +18,10 @@ public class ParkingLot {
     }
 
 
-    public ArrayList<ParkingBoy> getParkingBoys() {
-        return parkingBoys;
-    }
-
-    public void setParkingBoys(ArrayList<ParkingBoy> parkingBoys) {
-        this.parkingBoys = parkingBoys;
-    }
-
     public ArrayList<Ticket> getTicketList() {
         return ticketList;
     }
 
-    public void setTicketList(ArrayList<Ticket> ticketList) {
-        this.ticketList = ticketList;
-    }
 
     public void addTicket(Ticket ticket) {
         this.ticketList.add(ticket);
@@ -42,23 +31,16 @@ public class ParkingLot {
         return carList;
     }
 
-    public void setCarList(ArrayList<Car> carList) {
-        this.carList = carList;
-    }
 
     public String getParkingLotName() {
         return parkingLotName;
-    }
-
-    public void setParkingLotName(String parkingLotName) {
-        this.parkingLotName = parkingLotName;
     }
 
     public void addCar(Car car) {
         this.carList.add(car);
     }
 
-    public boolean isFull(){
+    public boolean isFull() {
         return this.carList.size() >= MAX_POSITION;
     }
 

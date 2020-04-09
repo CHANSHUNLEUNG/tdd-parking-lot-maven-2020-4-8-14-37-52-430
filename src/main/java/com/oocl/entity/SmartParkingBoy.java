@@ -14,10 +14,9 @@ public class SmartParkingBoy extends ParkingBoy {
     @Override
     public Ticket parkCar(Car car) throws FullParkingTicket {
         ParkingLot selectedParkingLot = this.getParkingLotList().stream()
-                .min((firstParkingLot,secondParkingLot) ->
-                        firstParkingLot.getCarList().size() - secondParkingLot.getCarList().size()).get();
+                .max(Comparator.comparing(parkingLot -> parkingLot.MAX_POSITION - parkingLot.getCarList().size())).get();
         System.out.println(selectedParkingLot.getParkingLotName());
-        if(selectedParkingLot == null){
+        if (selectedParkingLot == null) {
             throw new FullParkingTicket(FullParkingTicket.FULL_POSITION_ERROR);
         }
         return selectedParkingLot.park(car);
