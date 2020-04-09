@@ -3,6 +3,7 @@ package com.oocl;
 import com.oocl.entity.*;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 //    AC1: The parking boy can park a car into the parking lot and returns a parking ticket.
@@ -38,56 +39,67 @@ public class ParkingLotTest {
 
     @Test
     public void should_return_a_ticket_when_parking_boy_park_a_car_successfully() {
-        assertEquals(Ticket.class,parkingBoy.parkCar(parkingLot, firstCar).getClass());;
+        assertEquals(Ticket.class, parkingBoy.parkCar(parkingLot, firstCar).getClass());
+        ;
     }
+
     @Test
     public void should_return_a_ticket_with_correct_car_number_when_parking_boy_park_a_car_successfully() {
-        assertEquals(Car_NUMBER,parkingBoy.parkCar(parkingLot, firstCar).getCar().getCarNumber());;
+        assertEquals(Car_NUMBER, parkingBoy.parkCar(parkingLot, firstCar).getCar().getCarNumber());
+        ;
     }
 
     @Test
     public void should_parking_lot_access_multiply_car() {
-        parkingBoy.parkCar(parkingLot,firstCar);
-        parkingBoy.parkCar(parkingLot,secondCar);
-        assertEquals(parkingLot.getTicketList().size(),2);
+        parkingBoy.parkCar(parkingLot, firstCar);
+        parkingBoy.parkCar(parkingLot, secondCar);
+        assertEquals(parkingLot.getTicketList().size(), 2);
     }
 
     @Test
     public void should_fetch_the_right_car_when_there_are_two_cars_in_a_parking_lot() {
-        Ticket firstTicket = parkingBoy.parkCar(parkingLot,firstCar);
-        Ticket secondTicket = parkingBoy.parkCar(parkingLot,secondCar);
-        assertEquals(firstCar,parkingBoy.fetchCar(firstTicket));
+        Ticket firstTicket = parkingBoy.parkCar(parkingLot, firstCar);
+        Ticket secondTicket = parkingBoy.parkCar(parkingLot, secondCar);
+        assertEquals(firstCar, parkingBoy.fetchCar(firstTicket));
     }
 
     @Test
     public void should_get_the_car_and_remove_ticket_when_fetch_car() {
-        Ticket firstTicket = parkingBoy.parkCar(parkingLot,firstCar);
-        assertEquals(1,parkingLot.getTicketList().size());
-        assertEquals(1,parkingLot.getCarList().size());
+        Ticket firstTicket = parkingBoy.parkCar(parkingLot, firstCar);
+        assertEquals(1, parkingLot.getTicketList().size());
+        assertEquals(1, parkingLot.getCarList().size());
 
-        Ticket secondTicket = parkingBoy.parkCar(parkingLot,secondCar);
-        assertEquals(2,parkingLot.getTicketList().size());
-        assertEquals(2,parkingLot.getCarList().size());
+        Ticket secondTicket = parkingBoy.parkCar(parkingLot, secondCar);
+        assertEquals(2, parkingLot.getTicketList().size());
+        assertEquals(2, parkingLot.getCarList().size());
 
 
-        assertEquals(firstCar,parkingBoy.fetchCar(firstTicket));
+        assertEquals(firstCar, parkingBoy.fetchCar(firstTicket));
 
-        assertEquals(1,parkingLot.getTicketList().size());
-        assertEquals(1,parkingLot.getCarList().size());
+        assertEquals(1, parkingLot.getTicketList().size());
+        assertEquals(1, parkingLot.getCarList().size());
 
     }
 
     @Test
     public void should_return_null_when_customer_gives_the_wrong_ticket() {
         parkingBoy.parkCar(parkingLot, firstCar);
-        assertEquals(null,parkingBoy.fetchCar());
-        assertEquals(null,parkingBoy.fetchCar(new Ticket(parkingLot, secondCar)));
+        assertEquals(null, parkingBoy.fetchCar());
+        assertEquals(null, parkingBoy.fetchCar(new Ticket(parkingLot, secondCar)));
     }
 
     @Test
     public void should_return_null_when_give_the_same_ticket_twice() {
         Ticket firstTicket = parkingBoy.parkCar(parkingLot, firstCar);
         parkingBoy.fetchCar(firstTicket);
-        assertEquals(null,parkingBoy.fetchCar(firstTicket));
+        assertEquals(null, parkingBoy.fetchCar(firstTicket));
+    }
+
+    @Test
+    public void should_return_no_ticket_when_parking_lot_full() {
+        for (int index = 0; index < ParkingLot.MAX_POSITION; index++) {
+            parkingBoy.parkCar(parkingLot, new Car("testcar"));
+        }
+        assertEquals(null,parkingBoy.parkCar(parkingLot,firstCar));
     }
 }

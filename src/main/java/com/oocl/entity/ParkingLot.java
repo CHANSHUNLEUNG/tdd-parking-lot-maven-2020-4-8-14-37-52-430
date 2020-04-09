@@ -7,6 +7,7 @@ public class ParkingLot {
     private ArrayList<Ticket> ticketList;
     private ArrayList<ParkingBoy> parkingBoys;
     private ArrayList<Car> carList;
+    public static final int MAX_POSITION = 10;
 
 
     public ParkingLot(String parkingLotName) {
