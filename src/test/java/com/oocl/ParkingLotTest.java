@@ -105,7 +105,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_park_two_second_parking_lot_only_if_first_parking_lot_is_full() {
+    public void should_park_to_second_parking_lot_when_first_parking_lot_is_full() {
         for (int index = 0; index < ParkingLot.MAX_POSITION; index++) {
             parkingBoy.parkCar(new Car("first car"));
         }
