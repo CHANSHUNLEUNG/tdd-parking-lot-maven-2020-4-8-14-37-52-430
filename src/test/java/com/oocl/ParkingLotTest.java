@@ -113,33 +113,4 @@ public class ParkingLotTest {
         assertEquals("second car", parkingBoy.getParkingLotList().get(1).getCarList().get(0).getCarNumber());
     }
 
-    @Test
-    public void should_smart_parking_boy_park_correct_parking_lot() {
-        for (int index = 0; index < 2; index++) {
-            parkingBoy.parkCar(new Car("test car"));
-        }
-        smartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(1, smartParkingBoy.getParkingLotList().get(1).getCarList().size());
-        smartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(2, smartParkingBoy.getParkingLotList().get(1).getCarList().size());
-        smartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(3, smartParkingBoy.getParkingLotList().get(0).getCarList().size());
-        smartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(3, smartParkingBoy.getParkingLotList().get(1).getCarList().size());
-    }
-
-    @Test
-    public void should_super_smart_parking_boy_park_correct_parking_lot() {
-        for (int index = 0; index < 2; index++) {
-            parkingBoy.parkCar(new Car("test car"));
-        }
-        superSmartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(1, superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
-        superSmartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(2, superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
-        superSmartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(3, superSmartParkingBoy.getParkingLotList().get(0).getCarList().size());
-        superSmartParkingBoy.parkCar(new Car("test car"));
-        assertEquals(3, superSmartParkingBoy.getParkingLotList().get(1).getCarList().size());
-    }
 }
