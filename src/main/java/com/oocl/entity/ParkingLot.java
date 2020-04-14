@@ -32,12 +32,14 @@ public class ParkingLot {
         return this.carList.size() >= MAX_POSITION;
     }
 
-    public int getRemainingCapacity(){
-        return this.MAX_POSITION - carList.size();
+    int getRemainingCapacity() {
+        return MAX_POSITION - carList.size();
     }
-    public double getRemainingRatio(){
-        return this.getRemainingCapacity() / (double)this.MAX_POSITION;
+
+    double getRemainingRatio() {
+        return this.getRemainingCapacity() / (double) MAX_POSITION;
     }
+
     Ticket park(Car car) {
         Ticket ticket = new Ticket(this, car);
         this.addTicket(ticket);

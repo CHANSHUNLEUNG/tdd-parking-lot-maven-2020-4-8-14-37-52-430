@@ -6,10 +6,10 @@ import com.oocl.exception.UnrecognizedParkingTicketException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
-
 import org.junit.rules.ExpectedException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class ParkingLotTest {
     private static final String Car_NUMBER = "my-example-car-number";
