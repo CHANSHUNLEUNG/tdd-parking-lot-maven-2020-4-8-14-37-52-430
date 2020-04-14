@@ -9,19 +9,16 @@ public class ParkingLot {
     private ArrayList<Car> carList;
     public static final int MAX_POSITION = 10;
 
-
     public ParkingLot(String parkingLotName) {
         this.parkingLotName = parkingLotName;
-        ticketList = new ArrayList<Ticket>();
-        parkingBoys = new ArrayList<ParkingBoy>();
-        carList = new ArrayList<Car>();
+        ticketList = new ArrayList<>();
+        parkingBoys = new ArrayList<>();
+        carList = new ArrayList<>();
     }
-
 
     public ArrayList<Ticket> getTicketList() {
         return ticketList;
     }
-
 
     public void addTicket(Ticket ticket) {
         this.ticketList.add(ticket);
@@ -30,7 +27,6 @@ public class ParkingLot {
     public ArrayList<Car> getCarList() {
         return carList;
     }
-
 
     public String getParkingLotName() {
         return parkingLotName;

@@ -31,41 +31,41 @@ public class ParkingLotTest {
     public void setUp() {
         firstParkingLot = new ParkingLot(FIRST_PARKING_LOT_NAME);
         secondParkingLot = new ParkingLot(SECOND_PARKING_LOT_NAME);
+
         parkingBoy = new ParkingBoy(firstParkingLot, secondParkingLot);
         smartParkingBoy = new SmartParkingBoy(firstParkingLot, secondParkingLot);
         superSmartParkingBoy = new SuperSmartParkingBoy(firstParkingLot, secondParkingLot);
+
         firstCar = new Car(Car_NUMBER);
         secondCar = new Car(Car_NUMBER);
     }
 
 
     @Test
-    public void should_return_a_ticket_when_parking_boy_park_a_car_successfully() throws FullParkingTicket {
+    public void should_return_a_ticket_when_parking_boy_park_a_car_successfully() {
         assertEquals(Ticket.class, parkingBoy.parkCar(firstCar).getClass());
-        ;
     }
 
     @Test
-    public void should_return_a_ticket_with_correct_car_number_when_parking_boy_park_a_car_successfully() throws FullParkingTicket {
+    public void should_return_a_ticket_with_correct_car_number_when_parking_boy_park_a_car_successfully() {
         assertEquals(Car_NUMBER, parkingBoy.parkCar(firstCar).getCar().getCarNumber());
-        ;
     }
 
     @Test
-    public void should_parking_lot_access_multiply_car() throws FullParkingTicket {
+    public void should_parking_lot_access_multiply_car() {
         parkingBoy.parkCar(firstCar);
         parkingBoy.parkCar(secondCar);
         assertEquals(firstParkingLot.getTicketList().size(), 2);
     }
 
     @Test
-    public void should_fetch_the_right_car_when_there_are_two_cars_in_a_parking_lot() throws UnrecognizedParkingTicket, FullParkingTicket {
+    public void should_fetch_the_right_car_when_there_are_two_cars_in_a_parking_lot() {
         Ticket firstTicket = parkingBoy.parkCar(firstCar);
         assertEquals(firstCar, parkingBoy.fetchCar(firstTicket));
     }
 
     @Test
-    public void should_get_the_car_and_remove_ticket_when_fetch_car() throws UnrecognizedParkingTicket, FullParkingTicket {
+    public void should_get_the_car_and_remove_ticket_when_fetch_car() {
         Ticket firstTicket = parkingBoy.parkCar(firstCar);
         assertEquals(1, firstParkingLot.getTicketList().size());
         assertEquals(1, firstParkingLot.getCarList().size());
@@ -83,7 +83,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_throw_exception_when_parking_lot_is_full() throws FullParkingTicket {
+    public void should_throw_exception_when_parking_lot_is_full() {
         expectedException.expect(FullParkingTicket.class);
         expectedException.expectMessage(FullParkingTicket.FULL_POSITION_ERROR);
         for (int index = 0; index < ParkingLot.MAX_POSITION * parkingBoy.getParkingLotList().size() + 1; index++) {
@@ -108,7 +108,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_park_two_second_parking_lot_only_if_first_parking_lot_is_full() throws FullParkingTicket {
+    public void should_park_two_second_parking_lot_only_if_first_parking_lot_is_full() {
         for (int index = 0; index < ParkingLot.MAX_POSITION; index++) {
             parkingBoy.parkCar(new Car("first car"));
         }
@@ -117,7 +117,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_smart_parking_boy_park_correct_parking_lot() throws FullParkingTicket {
+    public void should_smart_parking_boy_park_correct_parking_lot() {
         for (int index = 0; index < 2; index++) {
             parkingBoy.parkCar(new Car("test car"));
         }
@@ -132,7 +132,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_super_smart_parking_boy_park_correct_parking_lot() throws FullParkingTicket {
+    public void should_super_smart_parking_boy_park_correct_parking_lot() {
         for (int index = 0; index < 2; index++) {
             parkingBoy.parkCar(new Car("test car"));
         }

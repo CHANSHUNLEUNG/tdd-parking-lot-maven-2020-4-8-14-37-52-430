@@ -17,9 +17,11 @@ public class ParkingBoy {
         this.parkingLotList.addAll(Arrays.asList(parkingLotList));
     }
 
-    public Ticket parkCar(Car car) throws FullParkingTicket {
-        ParkingLot selectedParkingLot = this.parkingLotList.stream().filter(parkingLot -> !parkingLot.isFull())
-                .findFirst().orElse(null);
+    public Ticket parkCar(Car car) {
+        ParkingLot selectedParkingLot = this.parkingLotList.stream()
+                .filter(parkingLot -> !parkingLot.isFull())
+                .findFirst()
+                .orElse(null);
         if (selectedParkingLot == null) {
             throw new FullParkingTicket(FullParkingTicket.FULL_POSITION_ERROR);
         }
@@ -27,7 +29,7 @@ public class ParkingBoy {
 
     }
 
-    public Car fetchCar(Ticket ticket) throws UnrecognizedParkingTicket {
+    public Car fetchCar(Ticket ticket) {
         boolean isTicketCorrect = ticket.getParkingLot().getCarList().contains(ticket.getCar());
         if (!isTicketCorrect) {
             throw new UnrecognizedParkingTicket(UnrecognizedParkingTicket.Wrong_TICKET_ERROR);
