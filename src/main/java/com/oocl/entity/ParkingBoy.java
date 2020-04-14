@@ -21,10 +21,7 @@ public class ParkingBoy {
         ParkingLot selectedParkingLot = this.parkingLotList.stream()
                 .filter(parkingLot -> !parkingLot.isFull())
                 .findFirst()
-                .orElse(null);
-        if (selectedParkingLot == null) {
-            throw new FullParkingTicket(FullParkingTicket.FULL_POSITION_ERROR);
-        }
+                .orElseThrow(() -> new FullParkingTicket(FullParkingTicket.FULL_POSITION_ERROR));
         return selectedParkingLot.park(car);
 
     }
