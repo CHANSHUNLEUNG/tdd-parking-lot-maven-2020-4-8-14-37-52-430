@@ -13,7 +13,7 @@ public class SmartParkingBoy extends ParkingBoy {
     @Override
     public Ticket parkCar(Car car) {
         ParkingLot selectedParkingLot = this.getParkingLotList().stream()
-                .max(Comparator.comparing(parkingLot -> ParkingLot.MAX_POSITION - parkingLot.getCarList().size()))
+                .max(Comparator.comparing(parkingLot -> parkingLot.getRemainingCapacity()))
                 .orElseThrow(() -> new FullParkingTicketException(FullParkingTicketException.FULL_POSITION_ERROR));
         return selectedParkingLot.park(car);
     }
