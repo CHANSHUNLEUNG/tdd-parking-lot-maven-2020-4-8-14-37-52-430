@@ -1,8 +1,8 @@
 package com.oocl;
 
 import com.oocl.entity.*;
-import com.oocl.exception.FullParkingTicket;
-import com.oocl.exception.UnrecognizedParkingTicket;
+import com.oocl.exception.FullParkingTicketException;
+import com.oocl.exception.UnrecognizedParkingTicketException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,11 +13,8 @@ import org.junit.rules.ExpectedException;
 
 public class ParkingLotTest {
     private static final String Car_NUMBER = "my-example-car-number";
-    private static final String FIRST_PARKING_LOT_NAME = "FIRST_PARKING_LOT_NAME";
-    private static final String SECOND_PARKING_LOT_NAME = "SECOND_PARKING_LOT_NAME";
 
     private ParkingLot firstParkingLot;
-    private ParkingLot secondParkingLot;
     private ParkingBoy parkingBoy;
     private SmartParkingBoy smartParkingBoy;
     private SuperSmartParkingBoy superSmartParkingBoy;
@@ -29,8 +26,8 @@ public class ParkingLotTest {
 
     @Before
     public void setUp() {
-        firstParkingLot = new ParkingLot(FIRST_PARKING_LOT_NAME);
-        secondParkingLot = new ParkingLot(SECOND_PARKING_LOT_NAME);
+        firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
 
         parkingBoy = new ParkingBoy(firstParkingLot, secondParkingLot);
         smartParkingBoy = new SmartParkingBoy(firstParkingLot, secondParkingLot);
@@ -70,7 +67,7 @@ public class ParkingLotTest {
         assertEquals(1, firstParkingLot.getTicketList().size());
         assertEquals(1, firstParkingLot.getCarList().size());
 
-        Ticket secondTicket = parkingBoy.parkCar(secondCar);
+        parkingBoy.parkCar(secondCar);
         assertEquals(2, firstParkingLot.getTicketList().size());
         assertEquals(2, firstParkingLot.getCarList().size());
 
@@ -84,8 +81,8 @@ public class ParkingLotTest {
 
     @Test
     public void should_throw_exception_when_parking_lot_is_full() {
-        expectedException.expect(FullParkingTicket.class);
-        expectedException.expectMessage(FullParkingTicket.FULL_POSITION_ERROR);
+        expectedException.expect(FullParkingTicketException.class);
+        expectedException.expectMessage(FullParkingTicketException.FULL_POSITION_ERROR);
         for (int index = 0; index < ParkingLot.MAX_POSITION * parkingBoy.getParkingLotList().size() + 1; index++) {
             parkingBoy.parkCar(new Car("testcar"));
         }
@@ -93,17 +90,17 @@ public class ParkingLotTest {
 
     @Test
     public void should_throw_exception_when_customer_give_wrong_ticket()
-            throws UnrecognizedParkingTicket, FullParkingTicket {
-        expectedException.expect(UnrecognizedParkingTicket.class);
-        expectedException.expectMessage(UnrecognizedParkingTicket.Wrong_TICKET_ERROR);
-        assertEquals(null, parkingBoy.fetchCar(new Ticket(firstParkingLot, secondCar)));
+            throws UnrecognizedParkingTicketException, FullParkingTicketException {
+        expectedException.expect(UnrecognizedParkingTicketException.class);
+        expectedException.expectMessage(UnrecognizedParkingTicketException.Wrong_TICKET_ERROR);
+        assertNull(parkingBoy.fetchCar(new Ticket(firstParkingLot, secondCar)));
     }
 
     @Test
     public void should_throw_exception_when_customer_give_no_ticket()
-            throws UnrecognizedParkingTicket {
-        expectedException.expect(UnrecognizedParkingTicket.class);
-        expectedException.expectMessage(UnrecognizedParkingTicket.NO_TICKET_ERROR);
+            throws UnrecognizedParkingTicketException {
+        expectedException.expect(UnrecognizedParkingTicketException.class);
+        expectedException.expectMessage(UnrecognizedParkingTicketException.NO_TICKET_ERROR);
         parkingBoy.fetchCar();
     }
 

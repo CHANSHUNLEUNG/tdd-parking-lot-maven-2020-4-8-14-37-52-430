@@ -1,9 +1,9 @@
 package com.oocl.exception;
 
-public class FullParkingTicket extends RuntimeException {
+public class FullParkingTicketException extends RuntimeException {
     public static final String FULL_POSITION_ERROR = "Not enough position.";
 
-    public FullParkingTicket(String message) {
+    public FullParkingTicketException(String message) {
         super(message);
     }
 }

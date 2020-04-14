@@ -1,9 +1,8 @@
 package com.oocl.entity;
 
-import com.oocl.exception.FullParkingTicket;
+import com.oocl.exception.FullParkingTicketException;
 
 import java.util.Comparator;
-import java.util.stream.IntStream;
 
 public class SmartParkingBoy extends ParkingBoy {
 
@@ -14,11 +13,8 @@ public class SmartParkingBoy extends ParkingBoy {
     @Override
     public Ticket parkCar(Car car) {
         ParkingLot selectedParkingLot = this.getParkingLotList().stream()
-                .max(Comparator.comparing(parkingLot -> parkingLot.MAX_POSITION - parkingLot.getCarList().size()))
-                .get();
-        if (selectedParkingLot == null) {
-            throw new FullParkingTicket(FullParkingTicket.FULL_POSITION_ERROR);
-        }
+                .max(Comparator.comparing(parkingLot -> ParkingLot.MAX_POSITION - parkingLot.getCarList().size()))
+                .orElseThrow(() -> new FullParkingTicketException(FullParkingTicketException.FULL_POSITION_ERROR));
         return selectedParkingLot.park(car);
     }
 }

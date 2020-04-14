@@ -1,6 +1,6 @@
 package com.oocl.entity;
 
-import com.oocl.exception.FullParkingTicket;
+import com.oocl.exception.FullParkingTicketException;
 
 import java.util.Comparator;
 
@@ -13,12 +13,9 @@ public class SuperSmartParkingBoy extends ParkingBoy {
     public Ticket parkCar(Car car) {
         ParkingLot selectedParkingLot = this.getParkingLotList().stream()
                 .max(Comparator.comparing(parkingLot ->
-                        new Double(parkingLot.MAX_POSITION - parkingLot.getCarList().size()) / parkingLot.MAX_POSITION))
-                .get();
+                        (double) (ParkingLot.MAX_POSITION - parkingLot.getCarList().size()) / ParkingLot.MAX_POSITION))
+                .orElseThrow(() -> new FullParkingTicketException(FullParkingTicketException.FULL_POSITION_ERROR));
 
-        if (selectedParkingLot == null) {
-            throw new FullParkingTicket(FullParkingTicket.FULL_POSITION_ERROR);
-        }
         return selectedParkingLot.park(car);
     }
 }

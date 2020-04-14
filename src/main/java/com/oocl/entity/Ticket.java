@@ -14,7 +14,7 @@ public class Ticket {
         return car;
     }
 
-    public ParkingLot getParkingLot() {
+    ParkingLot getParkingLot() {
         return parkingLot;
     }
 

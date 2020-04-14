@@ -1,13 +1,13 @@
 package com.oocl.entity;
 
-import com.oocl.exception.FullParkingTicket;
-import com.oocl.exception.UnrecognizedParkingTicket;
+import com.oocl.exception.FullParkingTicketException;
+import com.oocl.exception.UnrecognizedParkingTicketException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ParkingBoy {
-    private ArrayList<ParkingLot> parkingLotList = new ArrayList<ParkingLot>();
+    private ArrayList<ParkingLot> parkingLotList = new ArrayList<>();
 
     public ArrayList<ParkingLot> getParkingLotList() {
         return parkingLotList;
@@ -21,7 +21,7 @@ public class ParkingBoy {
         ParkingLot selectedParkingLot = this.parkingLotList.stream()
                 .filter(parkingLot -> !parkingLot.isFull())
                 .findFirst()
-                .orElseThrow(() -> new FullParkingTicket(FullParkingTicket.FULL_POSITION_ERROR));
+                .orElseThrow(() -> new FullParkingTicketException(FullParkingTicketException.FULL_POSITION_ERROR));
         return selectedParkingLot.park(car);
 
     }
@@ -29,14 +29,14 @@ public class ParkingBoy {
     public Car fetchCar(Ticket ticket) {
         boolean isTicketCorrect = ticket.getParkingLot().getCarList().contains(ticket.getCar());
         if (!isTicketCorrect) {
-            throw new UnrecognizedParkingTicket(UnrecognizedParkingTicket.Wrong_TICKET_ERROR);
+            throw new UnrecognizedParkingTicketException(UnrecognizedParkingTicketException.Wrong_TICKET_ERROR);
         }
         ticket.getParkingLot().getTicketList().remove(ticket);
         ticket.getParkingLot().getCarList().remove(ticket.getCar());
         return ticket.getCar();
     }
 
-    public Car fetchCar() throws UnrecognizedParkingTicket {
-        throw new UnrecognizedParkingTicket(UnrecognizedParkingTicket.NO_TICKET_ERROR);
+    public void fetchCar() throws UnrecognizedParkingTicketException {
+        throw new UnrecognizedParkingTicketException(UnrecognizedParkingTicketException.NO_TICKET_ERROR);
     }
 }
